@@ -1,5 +1,29 @@
 {
+  "devDependencies": {
+    "jest": "^29.3.1"
+  },
   "dependencies": {
     "inquirer": "^8.2.4"
-  }
+  },
+  "name": "teams-profile-gen-eh",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afredknot/teams-profile-gen-eh.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/afredknot/teams-profile-gen-eh/issues"
+  },
+  "homepage": "https://github.com/afredknot/teams-profile-gen-eh#readme"
 }
