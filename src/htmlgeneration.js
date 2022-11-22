@@ -1,5 +1,5 @@
 // create Manager card
-const generateManager = function (manager) {
+const createManager = function (manager) {
   return `
   <div class="col-4 mt-4">
       <div class="card h-100">
@@ -18,7 +18,7 @@ const generateManager = function (manager) {
 }
 
 // create Engineer card
-const generateEngineer = function (engineer) {
+const createEngineer = function (engineer) {
   return `
   <div class="col-4 mt-4">
       <div class="card h-100">
@@ -37,7 +37,7 @@ const generateEngineer = function (engineer) {
 }
 
 // create Intern card 
-const generateIntern = function (intern) {
+const createIntern = function (intern) {
   return `
   <div class="col-4 mt-4">
       <div class="card h-100">
@@ -68,21 +68,21 @@ generateHTML = (data) => {
 
       // call manager function
       if (role === 'Manager') {
-          const managerCard = generateManager(employee);
+          const managerCard = createManager(employee);
 
           pageArray.push(managerCard);
       }
 
       // call engineer function
       if (role === 'Engineer') {
-          const engineerCard = generateEngineer(employee);
+          const engineerCard = createEngineer(employee);
 
           pageArray.push(engineerCard);
       }
 
       // call intern function 
       if (role === 'Intern') {
-          const internCard = generateIntern(employee);
+          const internCard = createIntern(employee);
 
           pageArray.push(internCard);
       }

@@ -1,5 +1,10 @@
 const inquirer = require('inquirer');
-const template = require('./src/htmlgeneration');
+const generateHTML = require('./src/htmlgeneration');
+const employee = require('./lib/employees')
+const manager = require('./lib/manager')
+const engineer = require('./lib/engineer')
+const intern = require('./lib/intern');
+const { resolveTestEnvironment } = require('jest-resolve');
 // Node v10+ includes a promises module as an alternative to using callbacks with file system methods.
 const { writeFile } = require('fs').promises;
 
@@ -55,17 +60,27 @@ const createEmployee = () => {
       },
     
 ])
-
-    .then(employeeInput => {
+     .then (function (input){
+      switch (role.inputs){
+      case 'manager': createManager()
+      break;
+      case 'engineer': createEngineer()
+        break;
+      case 'intern': createIntern()
+      break;
+      default : generateHTML()
+      }
+     })
+         .then(employeeInput => {
       const { name, id, email } = employeeInput;
-      const employee = new Employee (name, id, email)
+      const employee = new createEmployee (name, id, email)
 
       employeeArray.push(employee)
       console.log(employee)
     });
   }
-const engineer = () => {
-  return inquirer.prompt([,
+function createEngineer(){ 
+  inquirer.prompt ([
     {
       type: 'input',
       name: 'github',
@@ -76,11 +91,11 @@ const engineer = () => {
       name: 'linkedin',
       message: 'Enter your LinkedIn URL.',
     },
-  ]) 
-
-    .then(engineerInput => {
-      const {}
-    })
+  ])
+}
+    // .then(engineerInput => {
+    //   const {}
+    // })
 
 
 // const generateHTML = ({ name, location, github, linkedin }) =>
@@ -106,7 +121,7 @@ const engineer = () => {
 // </div>
 // </body>
 // </html>`;
-  };
+  
 
 // Bonus using writeFileSync as a promise
 const init = () => {

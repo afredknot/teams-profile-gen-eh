@@ -1,5 +1,13 @@
-it ('test if employee is an object', () => {
-  const testName = new Employee (paul, 1220, "test@gmail.com")
+const  Engineer = require("../lib/engineer")
 
-  expect (typeof(testEmployee)).toEqual('object')
+it ('test new Engineer', () => {
+  
+  const testGithub = new Engineer ('paul', 1220, "test@gmail.com", 'TestGithub')
+
+  expect (testGithub.getGithub()).toEqual('TestGithub')
+})
+it ('test engineer', () => {
+  const testRole = new Engineer ('paul', 1220, "test@gmail.com")
+
+  expect (testRole.getRole()).toEqual('Engineer')
 })

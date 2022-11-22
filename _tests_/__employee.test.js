@@ -7,16 +7,38 @@ const Employee = require("../lib/employees");
       const TestEmployees = new Employee("paul", 1220, "test@gmail.com")
     
       expect(typeof(TestEmployees)).toEqual('object');
+    });
+
+    it ('test employee name', () => {
+      const TestEmployees = new Employee('paul',1229,'test@gmail.com')
+
+      expect((TestEmployees.name)).toEqual('paul');
     })
+    it ('test employee id', () => {
+      const TestEmployees = new Employee('paul',1229,'test@gmail.com')
 
+      expect((TestEmployees.id)).toEqual(1229)
+    })
+    it ('test employee email', () => {
+      const TestEmployees = new Employee('paul',1229,'test@gmail.com')
 
+      expect((TestEmployees.email)).toEqual('test@gmail.com')
+    });
+    it ('test employee getEmail()', () => {
+      const TestEmployees = new Employee('paul',1229,'test@gmail.com')
 
-   
-    // it("should print the nam of employee", () => {
-    //  const name = 'gary'
-    //   const employee = new Employee(name);
+      expect(TestEmployees.getEmail()).toEqual('test@gmail.com')
+    });it ('test employee getId()', () => {
+      const TestEmployees = new Employee('paul',1229,'test@gmail.com')
 
-    //   // TODO: Add a comment describing the purpose of the following statements
-    //   expect(employee.name).toEqual(gary);
-    //   expect(employee.id).toEqual();
- 
+      expect(TestEmployees.getId()).toEqual(1229)
+    });it ('test employee getRole()', () => {
+      const TestEmployees = new Employee('paul',1229,'test@gmail.com')
+
+      expect(TestEmployees.getRole()).toEqual('employee')
+    });
+    it ('test employee getName()', () => {
+      const TestEmployees = new Employee('paul',1229,'test@gmail.com')
+
+      expect(TestEmployees.getName()).toEqual('paul')
+    });
