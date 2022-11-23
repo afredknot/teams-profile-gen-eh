@@ -1,103 +1,161 @@
 const inquirer = require('inquirer');
 const generateHTML = require('./src/htmlgeneration');
-const employee = require('./lib/employees')
-const manager = require('./lib/manager')
-const engineer = require('./lib/engineer')
-const intern = require('./lib/intern');
-const { resolveTestEnvironment } = require('jest-resolve');
+// const Employee = require('./lib/employees')
+const Manager = require('./lib/manager')
+const Engineer = require('./lib/engineer')
+const Intern = require('./lib/intern');
 // Node v10+ includes a promises module as an alternative to using callbacks with file system methods.
 const { writeFile } = require('fs').promises;
-
-// Use writeFileSync method to use promises instead of a callback function
-const employeeArray = [];
+// const fs = require ('fs')
+const teamArray = [];
 
 const createEmployee = () => {
   return inquirer.prompt([
     {
       type: 'input',
       name: 'name',
-      message: 'What is the name of the employee?',
-      validate: name => {
-        if (name) {
-          return true;
-        } else {
-          console.log ('enter the name of the employee.');
-          return false;
-        }
-      }
+     
     },
     {
       type: 'input',
-      name: 'employee id',
-      message: 'what is the employees id?',
-      validate: nameInput => {
-        if (nameInput) {
-          return true;
-        } else {
-          console.log('hey, you need to input the id of the employee');
-        }
-      }
+      name: 'employee id'
+      
     },
     {
       type: 'input',
-      name: 'employeeEmail',
-      message: 'What is the employees email address?',
-      validate: nameInput => {
-        if (nameInput){
-          return true;
-          } else {
-            console.log('enter a valid email for the employee');
-            return false;
-        }
-      }
+      name: 'employee email',
+    
     },
       {
         type: 'list',
         name: 'role',
-        message: 'What is the roll of this employee?',
+        message: 'What is the role of this employee?',
         choices: ['manager', 'engineer', 'intern', 'no more needed']
   
+       }
+])};
+    const createManager = () =>{
+     return inquirer.prompt([
+        {
+        type: 'input',
+        name: 'office number',
+  
+        },
+        {
+        type: 'input',
+        name: 'name',
+   
+        
       },
+      {
+        type: 'input',
+        name:  'id',
+     
+        
+      },
+      {
+        type: 'input',
+        name: 'email',
+      
+      },
+      
+      ])
+    };
+   const createEngineer = () => { 
+    return inquirer.prompt ([
+      {
+        type: 'input',
+        name: 'github',
+    },
+    {
+    type: 'input',
+    name: 'name',
+  },
+  {
+    type: 'input',
+    name: 'id',
+  },
+  {
+    type: 'input',
+    name: 'email',
+  },
+    ])
+   }
+     const createIntern = () => {
+       inquirer.prompt ([
+      {
+        type: 'input',
+        name: 'school',
+      },
+      {
+      type: 'input',
+      name: 'name',
+      },
+    {
+      type: 'input',
+      name: 'id',
     
-])
-     .then (function (input){
-      switch (role.inputs){
-      case 'manager': createManager()
-      break;
-      case 'engineer': createEngineer()
-        break;
-      case 'intern': createIntern()
-      break;
-      default : generateHTML()
-      }
-     })
-         .then(employeeInput => {
-      const { name, id, email } = employeeInput;
-      const employee = new createEmployee (name, id, email)
+    },
+    {
+      type: 'input',
+      name: 'email',
+  
+    }
+    ])
+ 
+ .then (getRole => {
+  switch (role.inputs){
+    case Employee: createEmployee()
+    break;
+  case Manager: createManager()
+  break;
+  case Engineer: createEngineer()
+    break;
+  case Intern: createIntern()
+  break;
+  default : generateHTML()
+  };
+ })
 
-      employeeArray.push(employee)
-      console.log(employee)
-    });
+ .then(employeeData => {
+  // data for employee types 
+
+  let { name, id, email, role, github, school, officeNumber, addEmployee } = employeeData; 
+  let employee; 
+
+  if (role === "Engineer") {
+      employee = new Engineer (name, id, email, github);
+
+      console.log(employee);
+
+  } else if (role === "Intern") {
+      employee = new Intern (name, id, email, school);
+
+      console.log(employee);
+  } else if (role === "Manager"){
+  employee = new Manager (officeNumber, name, id, email );
   }
-function createEngineer(){ 
-  inquirer.prompt ([
-    {
-      type: 'input',
-      name: 'github',
-      message: 'Enter your GitHub Username',
-    },
-    {
-      type: 'input',
-      name: 'linkedin',
-      message: 'Enter your LinkedIn URL.',
-    },
-  ])
-}
-    // .then(engineerInput => {
-    //   const {}
-    // })
+  teamArray.push(employee); 
+
+  if (addEmployee) {
+      return addEmployee(teamArray); 
+  } else {
+      return teamArray;
+  }
+});
+     }
 
 
+ const init = () => {
+  createEmployee()
+    // Use writeFile method imported from fs.promises to use promises instead of
+    // a callback function
+    .then((teamArrray) => writeFile('./dist/index.html', generateHTML(teamArray)))
+    .then(() => console.log('Successfully wrote to index.html'))
+    .catch((err) => console.error(err));
+ }
+
+init();
 // const generateHTML = ({ name, location, github, linkedin }) =>
 //   `<!DOCTYPE html>
 // <html lang="en">
@@ -124,13 +182,3 @@ function createEngineer(){
   
 
 // Bonus using writeFileSync as a promise
-const init = () => {
-  createEmployee()
-    // Use writeFile method imported from fs.promises to use promises instead of
-    // a callback function
-    .then((answers) => writeFile('./dist/index.html', generateHTML(answers)))
-    .then(() => console.log('Successfully wrote to index.html'))
-    .catch((err) => console.error(err));
-};
-
-init();
