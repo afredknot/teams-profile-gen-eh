@@ -56,32 +56,32 @@ const createIntern = function (intern) {
 };
 
 // push array to page 
-generateHTML = (role) => {
+generateHTML = (employeesData) => {
 
   // array for cards 
   pageArray = []; 
 
-  for (let i = 0; i < role.length; i++) {
-      const employee = role[i];
+  for (let i = 0; i < employeesData.length; i++) {
+      const employee = employeesData[i];
       const role = employee.getRole(); 
 
 
       // call manager function
-      if (role === 'Manager') {
+      if (role === 'manager') {
           const managerCard = createManager(employee);
 
           pageArray.push(managerCard);
       }
 
       // call engineer function
-      if (role === 'Engineer') {
+      if (role === 'engineer') {
           const engineerCard = createEngineer(employee);
 
           pageArray.push(engineerCard);
       }
 
       // call intern function 
-      if (role === 'Intern') {
+      if (role === 'intern') {
           const internCard = createIntern(employee);
 
           pageArray.push(internCard);
