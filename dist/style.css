@@ -1,0 +1,11 @@
+header{
+  background-color: brown;
+  padding: 40px;
+  color: blanchedalmond;
+}
+
+.card-header{
+  background-color: rgb(101, 101, 179);
+  color:aliceblue;
+  text-align: center;
+}

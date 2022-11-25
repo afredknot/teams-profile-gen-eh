@@ -2,12 +2,12 @@ const  Engineer = require("../lib/engineer")
 
 it ('test new Engineer', () => {
   
-  const testGithub = new Engineer ('paul', 1220, "test@gmail.com", 'TestGithub')
+  const testGithub = new Engineer ('Engineer', 1220, "test@gmail.com", 'TestGithub')
 
   expect (testGithub.getGithub()).toEqual('TestGithub')
 })
-it ('test engineer', () => {
-  const testRole = new Engineer ('paul', 1220, "test@gmail.com")
+it ('test Engineer', () => {
+  const testRole = new Engineer ('Paul', 1220, "test@gmail.com")
 
-  expect (testRole.getRole()).toEqual('Engineer')
+  expect (testRole.getRole()).toEqual('Paul')
 })

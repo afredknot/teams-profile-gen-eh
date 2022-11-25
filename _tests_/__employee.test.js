@@ -33,9 +33,9 @@ const Employee = require("../lib/employees");
 
       expect(TestEmployees.getId()).toEqual(1229)
     });it ('test employee getRole()', () => {
-      const TestEmployees = new Employee('paul',1229,'test@gmail.com')
+      const TestEmployees = new Employee('Paul',1229,'test@gmail.com')
 
-      expect(TestEmployees.getRole()).toEqual('employee')
+      expect(TestEmployees.getRole()).toEqual('Employee')
     });
     it ('test employee getName()', () => {
       const TestEmployees = new Employee('paul',1229,'test@gmail.com')

@@ -1,61 +1,16 @@
 const inquirer = require('inquirer');
 const generateHTML = require('./src/htmlgeneration');
 // const Employee = require('./lib/employees');
-// const Manager = require('./lib/manager');
-// const Engineer = require('./lib/engineer');
-// const Intern = require('./lib/intern');
-// Node v10+ includes a promises module as an alternative to using callbacks with file system methods.
+const Manager = require('./lib/manager');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
+
 const {writeFile} = require('fs');
-// const fs = require ('fs')
-const teamArray = [];
 
 
-const createEmployee = () => {
-  return inquirer
-    .prompt([
-      {
-        type: 'list',
-        message: 'What is the role of this employee?',
-        name: 'role',
-        choices: ['manager', 'engineer', 'intern', 'no more needed'],
-      },
-      // {
-      //   type: 'input',
-      //   name: 'name',
 
-      // },
-      // {
-      //   type: 'input',
-      //   name: 'employee id'
-
-      // },
-      // {
-      //   type: 'input',
-      //   name: 'employee email',
-
-      // },
-    ])
-  
-    .then((getRole) => {
-      switch (getRole.role) {
-        // case Employee: createEmployee()
-        // break;
-        case 'manager':
-          createManager();
-          break;
-        case 'engineer':
-          createEngineer();
-          break;
-        case 'intern':
-          createIntern();
-          break;
-        default:
-          generateHTML();
-      }
-    })
-  }
 const createManager = () => {
-  inquirer.prompt([
+  return inquirer.prompt([
     {
       type: 'input',
       name: 'name',
@@ -73,10 +28,14 @@ const createManager = () => {
       name: 'office number',
     },
   ])
-}
-const createEngineer = () => {
-  inquirer.prompt([
-    {
+  .then(
+    ({ name, id, email, officeNumber}) =>
+    new Manager(name, id, email, officeNumber)
+    );
+  };
+  const createEngineer = () => {
+    return inquirer.prompt([
+      {
       type: 'input',
       name: 'name',
     },
@@ -93,9 +52,13 @@ const createEngineer = () => {
       name: 'github',
     },
   ])
+  .then(
+    ({ name, id, email, github}) =>
+    new Engineer(name, id, email, github)
+    );
 }
 const createIntern = () => {
-   inquirer.prompt([
+  return inquirer.prompt([
     {
       type: 'input',
       name: "name",
@@ -113,79 +76,68 @@ const createIntern = () => {
       name: 'school',
     },
   ])
+  .then(
+    ({ name, id, email, school}) =>
+    new Intern(name, id, email, school)
+    );
+};
 
- .then(employeesData => {
-  // data for employee types
-
-  let { name, id, email, role, github, school, officeNumber, addEmployee } = employeesData;
-  let employee;
-
-  if (role === "engineer") {
-      employee = new Engineer (name, id, email, github);
-
-      console.log(employee);
-
-  } else if (role === "intern") {
-      employee = new Intern (name, id, email, school);
-
-      console.log(employee);
-  } else if (role === "manager"){
-  employee = new Manager (officeNumber, name, id, email );
-  }
-  teamArray.push(employee);
-
-  if (addEmployee) {
-      return addEmployee(teamArray);
-  } else {
-      return teamArray;
-  }
-})
+const getRole = () => {
+  return inquirer.prompt ([
+   {
+    type: "list",
+   message: "What is this employees role?",
+   name: 'role',
+   choices: ["Manager", "Engineer", "Intern", "no more needed"]}
+  ])};
      
-};
-   
-
-
-const init = () => {
-  createEmployee()
-    // Use writeFile method imported from fs.promises to use promises instead of
-    // a callback function
-    .then((employeesData) =>
-      writeFile('./dist/index.html', generateHTML(employeesData))
-    )
-    .then(() => console.log('Successfully wrote to index.html'))
-    .catch((err) => console.error(err));
-};
-
-init()
-// .then ((employeeData) => {
-// const filename = `${employeeData.name.toLowerCase().split(' ').join(' ')}.json`;
-// fs.writeFile(filename, JSON.stringify(data, null, '\t'), (err) =>
-//       err ? console.log(err) : console.log('Success!'))
-// })
-
-//  .then(employeeData => {
-//   // data for employee types
-
-//   let { name, id, email, role, github, school, officeNumber, addEmployee } = employeeData;
-//   let employee;
-
-//   if (role === "Engineer") {
-//       employee = new Engineer (name, id, email, github);
-
-//       console.log(employee);
-
-//   } else if (role === "Intern") {
-//       employee = new Intern (name, id, email, school);
-
-//       console.log(employee);
-//   } else if (role === "Manager"){
-//   employee = new Manager (officeNumber, name, id, email );
-//   }
-//   teamArray.push(employee);
-
-//   if (addEmployee) {
-//       return addEmployee(teamArray);
-//   } else {
-//       return teamArray;
-//   }
-
+  
+  const addEmployee = (teamArray) =>{
+       return getRole().then (({role}) => {
+        if(role === 'no more needed') {
+          return teamArray;
+        }
+        switch(role) {
+          case "Manager":
+            return createManager().then((newEmployee) => {
+              teamArray.push(newEmployee);
+              return addEmployee(teamArray);
+            });
+          case "Engineer":
+            return createEngineer().then((newEmployee) => {
+              teamArray.push(newEmployee);
+              return addEmployee(teamArray);
+            });
+          case "Intern":
+            return createIntern().then((newEmployee) => {
+              teamArray.push(newEmployee);
+              return addEmployee(teamArray);
+            });
+          }
+      });
+    };
+    const createEmployee = () => {
+      return addEmployee ([ ])
+    };
+    
+    
+    const init = () => {
+      createEmployee()
+        // Use writeFile method imported from fs.promises to use promises instead of
+        // a callback function
+        .then((employeesData) => {
+          return writeFile(
+            "./dist/index.html",
+            generateHTML(employeesData),
+            (err) => {
+              if (err) {
+                console.log(err);
+              }
+            }
+          );
+        })
+        .then(() => console.log("Successfully wrote to index.html"))
+        .catch((err) => console.error(err));
+    };
+    
+    init();

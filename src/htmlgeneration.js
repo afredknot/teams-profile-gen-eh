@@ -67,21 +67,21 @@ generateHTML = (employeesData) => {
 
 
       // call manager function
-      if (role === 'manager') {
+      if (role === 'Manager') {
           const managerCard = createManager(employee);
 
           pageArray.push(managerCard);
       }
 
       // call engineer function
-      if (role === 'engineer') {
+      if (role === 'Engineer') {
           const engineerCard = createEngineer(employee);
 
           pageArray.push(engineerCard);
       }
 
       // call intern function 
-      if (role === 'intern') {
+      if (role === 'Intern') {
           const internCard = createIntern(employee);
 
           pageArray.push(internCard);
@@ -115,7 +115,7 @@ return`
 <body>
     <header>
         <nav class="navbar" id="navbar">
-            <span class="navbar-brand mb-0 h1 w-100 text-center" id="navbar-text">Team Profile</span>
+            <span class="navbar-brand mb-0 h1 w-100 text-center text-bg-light" id="navbar-text">Team Profile</span>
         </nav>
     </header>
     <main>

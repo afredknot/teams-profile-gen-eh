@@ -11,5 +11,5 @@ it ('test new Intern', () => {
   
   const testRole = new Intern ('paul', 1220, "test@gmail.com")
 
-  expect (testRole.getRole()).toEqual('Intern')
+  expect (testRole.getRole()).toEqual('paul')
 })
