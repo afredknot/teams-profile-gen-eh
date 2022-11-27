@@ -17,7 +17,7 @@ clone repo into terminal, type 'nmp i', 'npm i inquirer', 'npm init -y' and 'npm
 
 to run tests you need to type 'npm run test' and then to be able to generate the html file you need to type 'node index.js' to be able to run the js in the terminal. answer all prompts and you'll be able to create an employee page that you can view in your browser.
 here is the link to the video walkthrough to be able to use this app.
-
+https://watch.screencastify.com/v/jC9Xo7Vx1MobDmd5e1As
 
 ## User_Story
 AS A manager
