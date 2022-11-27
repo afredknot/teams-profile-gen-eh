@@ -1,6 +1,6 @@
 # teams-profile-gen-eh
 
-
+[!screenshot](./screenshot/screenshot.png)
 ## Table of Contents
 * [Installation](#installation)
 * [usage](#usage)
