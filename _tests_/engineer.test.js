@@ -7,7 +7,7 @@ it ('test new Engineer', () => {
   expect (testGithub.getGithub()).toEqual('TestGithub')
 })
 it ('test Engineer', () => {
-  const testRole = new Engineer ('Paul', 1220, "test@gmail.com")
+  const testRole = new Engineer ('Engineer', 1220, "test@gmail.com")
 
-  expect (testRole.getRole()).toEqual('Paul')
+  expect (testRole.getRole()).toEqual('Engineer')
 })
